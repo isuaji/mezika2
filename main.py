@@ -85,7 +85,7 @@ class krmkMod(loader.Module):
             self.db.set("Thr", "thr", self.thr)
             txt = f"<b>Приоритетный канал:</b> <code>{iid}</code>"
             return await m.edit(txt)
-        iid = int(cmn)
+        iid = cmn
         txt = ""
         await m.edit(await self.red(iid))
 
