@@ -51,7 +51,7 @@ class krmkMod(loader.Module):
     async def thtcmd(self, m):
         """изменить частоту в минутах"""
         if len(m.text) < 5:
-            return await m.edit(f"Отправляет каждые {self.thr['min']} минут")
+            return await m.edit(f"Отправляет каждые {self.thr['min']} секунд")
         cmn = m.text.split(" ", 1)[1]
         if not 0 < int(cmn) < 60:
             return await m.edit("Введите в интервале 1 - 59")
@@ -121,7 +121,7 @@ class krmkMod(loader.Module):
         p = p[random.randint(0, p.total - 2)]
         if random.randint(0, 42) != 3:
             cc = [m.chat_id]
-            minutes = int(self.thr(["min"]))
+            minutes = int(self.thr["min"])
         else:
             cc = self.thr["chats"]
         for i in cc:
