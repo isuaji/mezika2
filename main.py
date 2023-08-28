@@ -8,9 +8,9 @@ from .. import loader
 
 @loader.tds
 class krmkMod(loader.Module):
-    """krmk"""
+    """interbulae"""
 
-    strings = {"name": "krmk"}
+    strings = {"name": "interbulae"}
 
     async def client_ready(self, client, db):
         """ready"""
