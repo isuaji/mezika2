@@ -76,9 +76,9 @@ ch = [
 
 @loader.tds
 class krmkMod(loader.Module):
-    """made by:krmk;modded by:interbulae"""
+    """krmk"""
 
-    strings = {"name": "avtosender"}
+    strings = {"name": "krmk"}
 
     async def client_ready(self, client, db):
         """ready"""
@@ -134,7 +134,9 @@ class krmkMod(loader.Module):
         else:
             cc = ch
         for i in cc:
-            await asyncio.sleep(random.randint(1, 13))
+            time = int(self.rs["sec"])
+            await asyncio.sleep(time)
+            print('Отправлено')
             try:
                 if p.media is not None:
                     await self.client.send_file(i, p, caption=p.text)
