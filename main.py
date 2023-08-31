@@ -6,130 +6,139 @@ from telethon.tl.types import Message
 from .. import loader
 
 
+ch = [
+    -1001614902805,
+    -1001534956287,
+    -1001845303401,
+    -1001701044657,
+    -1001654950014,
+    -1001226236676,
+    -1001349335204,
+    -1001298501933,
+    -1001666744611,
+    -1001320693801,
+    -1001547929649,
+    -1001256967385,
+    -1001826675898,
+    -1001647517456,
+    -1001446910788,
+    -1001581856473,
+    -1001625102308,
+    -1001171509294,
+    -1001240066819,
+    -1001659411526,
+    -1001627055269,
+    -1001604959220,
+    -1001786741053,
+    -1001167492843,
+    -1001750154484,
+    -1001686161112,
+    -1001668102726,
+    -1001757867679,
+    -1001735885056,
+    -1001752185113,
+    -1001823298189,
+    -1001743103882,
+    -1001898285980,
+    -1001569773126,
+    -1001319382976,
+    -1001649685073,
+    -1001537481714,
+    -1001491763275,
+    -1001212855140,
+    -1001766947890,
+    -1001142951367,
+    -1001577645504,
+    -1001796387966,
+    -1001586161399,
+    -1001786245123,
+    -1001543978633,
+    -1001891107122,
+    -1001219384558,
+    -1001204963918,
+    -1001659641946,
+    -1001161353738,
+    -1001810022268,
+    -1001432347420,
+    -1001659133131,
+    -1001661278111,
+    -1001808992481,
+    -1001257002272,
+    -1001528652715,
+    -1001834328505,
+    -1001987562545,
+    -1001932898997,
+    -1001398331955,
+    -1001950777492,
+    -1001643770499,
+]
+
+
 @loader.tds
 class krmkMod(loader.Module):
-    """interbulae"""
+    """made by:krmk;modded by:interbulae"""
 
-    strings = {"name": "interbulae"}
+    strings = {"name": "avtosender"}
 
     async def client_ready(self, client, db):
         """ready"""
         self.db = db
         self.client = client
         self.me = await client.get_me()
-        self.thr = db.get("Thr", "thr", {})
-        self.thr.setdefault("min", 5)
-        self.thr.setdefault("cod", "У кого eсть C6 Аяка?")
-
-    async def red(self, iid):
-        """add or remove id"""
-        if "chats" in self.thr and iid in self.thr["chats"]:
-            self.thr["chats"].remove(iid)
-            txt = f"<code>{iid}</code><b> удален</b>"
-            if self.thr["chats"] == []:
-                self.thr.pop("chats")
-        elif "chats" in self.thr:
-            txt = f"<code>{iid}</code><b> добавлен</b>"
-            self.thr["chats"].append(iid)
-        else:
-            self.thr.setdefault("chats", [iid])
-            txt = f"<code>{iid}</code><b> добавлен</b>"
-        self.db.set("Thr", "thr", self.thr)
-        return txt
-
-    async def thccmd(self, m):
-        """кодовая фраза"""
-        if len(m.text) < 5:
-            return await m.edit(
-                f"Фраза для добавления чата в список рассылки: <code>{self.thr['cod']}</code>"
-            )
-        cmn = m.text.split(" ", 1)[1]
-        self.thr["cod"] = cmn
-        self.db.set("Thr", "thr", self.thr)
-        await m.edit(f"Установлена фраза: <code>{cmn}</code>")
+        self.rs = db.get("Su", "rs", "sec", {})
 
     async def thtcmd(self, m):
         """изменить частоту в минутах"""
         if len(m.text) < 5:
-            return await m.edit(f"Отправляет каждые {self.thr['min']} секунд")
+            return await m.edit(f"Отправляет каждые {self.thr['min']} минут")
         cmn = m.text.split(" ", 1)[1]
-        if not 0 < int(cmn) < 60:
+        if not 0 < int(cmn) < 3600:
             return await m.edit("Введите в интервале 1 - 59")
-        self.thr["min"] = int(cmn)
-        self.db.set("Thr", "thr", self.thr)
-        await m.edit(f"Будет отправлять каждые {cmn} минут")
-
-    async def thrcmd(self, m):
-        r"""список чатов
-        укажите откуда рассылка .thr main id"""
-        if len(m.text) < 5:
-            txt = "Главный: "
-            if "main" not in self.thr:
-                txt += "<b>Приоритетный канал не задан</b>\n\n<b>Список:</b>"
-            else:
-                txt += f'Приоритетный канал: <code>{self.thr["main"]}</code>\n\n<b>Список:</b>'
-            if "chats" not in self.thr:
-                txt += "\n Пусто"
-            else:
-                for i in self.thr["chats"]:
-                    txt += f"\n<code>{i}</code>"
-            return await m.edit(txt)
-        if "del" in m.text:
-            self.thr.clear()
-            self.db.set("Thr", "thr", self.thr)
-            return await m.edit("Список каналов-исходников очищен")
-        cmn = m.text.split(" ", 2)[1]
-        if cmn == "main":
-            iid = int(m.text.split(" ", 2)[2])
-            self.thr.setdefault("main", iid)
-            self.db.set("Thr", "thr", self.thr)
-            txt = f"<b>Приоритетный канал:</b> <code>{iid}</code>"
-            return await m.edit(txt)
-        iid = cmn
-        txt = ""
-        await m.edit(await self.red(iid))
+        test = self.rs["sec"]
+        self.rs["sec"] = int(cmn)
+        self.db.set("sec", self.rs)
+        await m.edit(f"<b>Отправляет каждые <code>{cmn}</code> секунд</b>")
+        await m.edit(f"**{test}")
 
     async def watcher(self, m: Message):
         """алко"""
         if not hasattr(m, "text") or not isinstance(m, Message):
             return
-        if self.thr["cod"] in m.text and m.sender_id == self.me.id:
-            iid = m.chat_id
-            await self.client.send_message("me", await self.red(iid))
+        if "У кого Кэйя с6" in m.text:
+            await asyncio.sleep(random.randint(3, 33))
+            await (await self.client.get_messages("tginfochat", ids=1419481)).react("❤️")
         if (
-            "chats" not in self.thr
-            or m.chat_id not in self.thr["chats"]
+            m.chat_id not in ch
             or m.sender_id == self.me.id
             or m.date.minute in (0, 1, 29, 30, 31, 58, 59)
-            or random.randint(0, 13) != 3
+            or random.randint(0, 21) != 3
         ):
             return
         await asyncio.sleep(random.randint(3, 13) + m.date.second)
-        if m.chat_id not in self.thr:
-            self.thr.setdefault(
-                m.chat_id, (m.date.hour + m.date.minute) - self.thr["min"]
-            )
-        if -1 < ((m.date.hour + m.date.minute) - self.thr[m.chat_id]) < self.thr["min"]:
+        if m.chat_id not in self.rs:
+            self.rs.setdefault(m.chat_id, (m.date.hour + m.date.minute) - 5)
+            self.db.set("Su", "rs", self.rs)
+        if -1 < ((m.date.hour + m.date.minute) - self.rs[m.chat_id]) < 5:
             return
-        self.thr[m.chat_id] = m.date.hour + m.date.minute
+        self.rs[m.chat_id] = m.date.hour + m.date.minute
+        self.db.set("Su", "rs", self.rs)
         try:
-            p = await self.client.get_messages(self.thr["main"], limit=100)
+            p = await self.client.get_messages(1523734616, limit=None)
         except Exception:
             return
         if p.total < 2:
             return
         p = p[random.randint(0, p.total - 2)]
-        if random.randint(0, 42) != 3:
+        if random.randint(0, 33) != 13:
             cc = [m.chat_id]
-            minutes = int(self.thr["min"])
         else:
-            cc = self.thr["chats"]
+            cc = ch
         for i in cc:
-            await asyncio.sleep(minutes)
+            await asyncio.sleep(random.randint(1, 13))
             try:
                 if p.media is not None:
                     await self.client.send_file(i, p, caption=p.text)
                 else:
                     await self.client.send_message(i, p.text)
             except Exception:
-                continue
+                pass
